@@ -52,9 +52,16 @@
                   </small>
                 </div>
               @endif
+              @if($item->published_at)
               <small class="text-muted d-block mb-3">
-                <i class="bi bi-calendar3"></i> {{ $item->published_at->format('d M Y') }}
+                <i class="bi bi-calendar3"></i> 
+                @if(is_string($item->published_at))
+                  {{ \Carbon\Carbon::parse($item->published_at)->format('d M Y') }}
+                @else
+                  {{ $item->published_at->format('d M Y') }}
+                @endif
               </small>
+              @endif
               <div class="btn-group w-100" role="group">
                 <a href="{{ route('skills.show', $item->id) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
                 <a href="{{ route('skills.edit', $item->id) }}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>

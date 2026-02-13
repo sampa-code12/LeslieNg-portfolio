@@ -40,25 +40,7 @@
           <li><a href="{{ route('index') }}" class="@if(Route::currentRouteName() === 'index') active @endif">Home</a></li>
           <li><a href="{{ route('about') }}" class="@if(Route::currentRouteName() === 'about') active @endif">About</a></li>
           <li><a href="{{ route('resume') }}" class="@if(Route::currentRouteName() === 'resume') active @endif">Resume</a></li>
-          <li><a href="@if(Route::currentRouteName() === 'index') #services @else {{ route('index') }}#services @endif">Services</a></li>
-          <li><a href="{{ route('portfolio') }}" class="@if(Route::currentRouteName() === 'portfolio') active @endif">Portfolio</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
+      
           <li><a href="{{ route('contact') }}" class="@if(Route::currentRouteName() === 'contact') active @endif">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -102,6 +84,9 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+
+  <!-- Testimonial Modal -->
+  @include('components.testimonial-modal')
 
   <!-- Vendor JS Files -->
   <script src="{{ asset('folio/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

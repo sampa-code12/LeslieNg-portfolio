@@ -4,30 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Resume extends Model
 {
-    protected $table = 'services';
+    protected $table = 'resumes';
     protected $fillable = [
         'user_id',
+        'type',
         'title',
-        'slug',
+        'subtitle',
+        'institution_company',
         'description',
-        'category',
-        
-        'published_by',
+        'start_date',
+        'end_date',
+        'percentage',
         'published_at',
     ];
 
     protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
         'published_at' => 'datetime',
-        'published_by' => 'datetime',
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function skills(){
-        return $this->belongsToMany(Skill::class, 'service_skill');
     }
 }

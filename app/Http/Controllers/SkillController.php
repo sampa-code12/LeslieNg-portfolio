@@ -33,15 +33,19 @@ class SkillController extends Controller
     {
         $request->validate([
             'name'=>'required|string|max:255',
-            'level'=>'nullable|string|max 10',
+            'level'=>'nullable|string|max:30',
             'category'=>'required|string|max:255',
+            'percentage'=>'nullable|integer|min:0|max:100',
+            'range'=>'nullable|string|in:Beginner,Elementary,Intermediate,Advanced,Expert,Master',
         ]);
 
         Skill::create([
             'name'=>$request->name,
             'level'=>$request->level,
             'category'=>$request->category,
-            'published_at'=>now(),
+            'percentage'=>$request->percentage ?? null,
+            'range'=>$request->range ?? null,
+            'published_at'=>$request->has('published') ? now() : null,
         ]);
         
         return redirect()->route('skills.index')->with('message','competence cree et ajoute avec succes !');
@@ -75,8 +79,10 @@ class SkillController extends Controller
     {
         $request->validate([
             'name'=>'required|string|max:255',
-            'level'=>'nullable|string|max 10',
+            'level'=>'nullable|string|max:30',
             'category'=>'required|string|max:255',
+            'percentage'=>'nullable|integer|min:0|max:100',
+            'range'=>'nullable|string|in:Beginner,Elementary,Intermediate,Advanced,Expert,Master',
         ]);
 
         
@@ -84,8 +90,14 @@ class SkillController extends Controller
             'name'=>$request->name,
             'level'=>$request->level,
             'category'=>$request->category,
-            'published_at'=>now(),
+            'percentage'=>$request->percentage ?? null,
+            'range'=>$request->range ?? null,
+            'published_at'=>$request->has('published') ? now() : null,
         ]);
+        
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => "Skill mis à jour avec succès!"]);
+        }
         
         return redirect()->route('skills.index')->with('message',"competence {$skill->name} mise avec succes avec succes !");
     }

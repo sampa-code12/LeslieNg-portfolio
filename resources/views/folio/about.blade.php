@@ -226,6 +226,9 @@
   <div class="container section-title" data-aos="fade-up">
     <h2>Avis & Témoignages</h2>
     <p>Découvrez ce que mes clients pensent de mes services</p>
+    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#testimonialModal" style="margin-top: 15px;">
+      <i class="bi bi-star"></i> Donner un Témoignage
+    </button>
   </div>
 
   <div class="container">
@@ -255,10 +258,13 @@
                 <div style="padding-top: 15px; border-top: 1px solid #e0e0e0;">
                   <div style="display: flex; align-items: center; gap: 10px;">
                     <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;">
-                      {{ substr($item->message, 0, 1) }}
+                      {{ substr($item->name ?? 'U', 0, 1) }}
                     </div>
                     <div>
-                      <p style="color: #333; font-weight: 700; margin: 0;">Client Satisfait</p>
+                      <p style="color: #333; font-weight: 700; margin: 0;">{{ $item->name ?? 'Utilisateur' }}</p>
+                      @if($item->email)
+                        <small style="color: #999;">{{ $item->email }}</small><br>
+                      @endif
                       <small style="color: #999;">{{ $item->published_at ? $item->published_at->format('d M Y') : 'N/A' }}</small>
                     </div>
                   </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\FolioController;
 use App\Http\Controllers\AvisController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SkillController;
+use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\DashboardController;
 
 // Redirect root to folio index
@@ -14,6 +15,9 @@ Route::get('/', function () {
 
 // Dashboard Route
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/section/{section}', [DashboardController::class, 'section'])->name('dashboard.section');
+Route::get('/dashboard/{type}/{id}', [DashboardController::class, 'showDetail'])->name('dashboard.show');
+Route::get('/dashboard/{type}/{id}/edit-form', [DashboardController::class, 'editFormDetail'])->name('dashboard.edit-form');
 
 // FolioOne Portfolio Routes
 Route::get('/', [FolioController::class, 'index'])->name('index');
@@ -27,9 +31,10 @@ Route::get('/portfolio-details', [FolioController::class, 'portfolioDetails'])->
 Route::get('/starter-page', [FolioController::class, 'starterPage'])->name('starter-page');
 Route::post('/contact', [FolioController::class, 'storeContact'])->name('contact.store');
 
-// Resource Routes for Avis, Services, Skills
+// Resource Routes for Avis, Services, Skills, Resumes
 Route::resource('avis', AvisController::class);
 Route::resource('services', ServiceController::class);
 Route::resource('skills', SkillController::class);
+Route::resource('resumes', ResumeController::class);
 
 

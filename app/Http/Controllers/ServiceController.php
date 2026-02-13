@@ -77,22 +77,25 @@ class ServiceController extends Controller
     public function update(Request $request, Service $service)
     {
         $request->validate([
-            'title' => 'required|string|max:255|unique',
+            'title' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255',
-            'description' => 'required|text',
+            'description' => 'required|string',
             'category'=>'required|string|max:255'
         ]);
 
-        
-
         $service->update([
             'title'=>$request->title,
-            'slug'=>$request->slug,
+            'slug'=>$request->slug ?? $request->title,
             'description'=>$request->description,
             'category'=>$request->category,
             'published_by'=>null,
-            'published_at'=>now()
+            'published_at'=>$request->has('published') ? now() : null
         ]);
+        
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => "Service mis à jour avec succès!"]);
+        }
+        
         return redirect()->route('services.index')->with('message',"service {$service->title} mis a jour avec succes !");
     }
     

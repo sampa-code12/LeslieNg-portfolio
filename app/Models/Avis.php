@@ -10,14 +10,15 @@ class Avis extends Model
     protected $table = 'avis';
     protected $fillable = [
         'user_id',
+        'name',
+        'email',
         'message',
         'published_at',
     ];
 
-    public function cast():Array
-    {
-        return ['published_at'=>'datetime'];
-    }
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }

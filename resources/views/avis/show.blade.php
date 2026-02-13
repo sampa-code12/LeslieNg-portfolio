@@ -44,7 +44,7 @@
             <hr>
             <div class="mt-4">
               <small class="text-muted">
-                <i class="bi bi-calendar3"></i> Publié: {{ $avis->published_at->format('d F Y à H:i') }}
+                <i class="bi bi-calendar3"></i> Publié: {{ $avis->published_at ? $avis->published_at->format('d F Y à H:i') : 'N/A' }}
               </small>
             </div>
 

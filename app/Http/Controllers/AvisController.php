@@ -30,15 +30,19 @@ class AvisController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'message'=>'required|string|max:500',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message'=>'required|string|max:5000',
         ]);
 
         Avis::create([
+            'name' => $request->name,
+            'email' => $request->email,
             'message'=>$request->message,
             'published_at'=>now(),
         ]);
 
-        return redirect()->route('avis.index')->with('message','votre a  ete avis envoye avec succes');
+        return redirect()->back()->with('message','Votre témoignage a été envoyé avec succès !');
     }
 
     /**
@@ -66,19 +70,29 @@ class AvisController extends Controller
      */
     public function update(Request $request, Avis $avis)
     {
-        $timeForUpdate = now()->diffInMinutes($avis->published_at);
-        if($timeForUpdate > 60){
-            return redirect()->route('avis.index')->with('error','delai expire');
-        }
-
         $request->validate([
-        'message' => 'required|string|max:500',
-    ]);
+            'author' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'company' => 'nullable|string|max:255',
+            'message' => 'required|string|max:1000',
+            'rating' => 'nullable|integer|min:1|max:5',
+        ]);
     
-    $avis->update(['message' => $request->message,'published_at'=>now()]);
-    
-    return redirect()->route('avis.index')
-        ->with('message', 'Avis modifié avec succès.');
+        $avis->update([
+            'author' => $request->author ?? $avis->author,
+            'email' => $request->email ?? $avis->email,
+            'company' => $request->company ?? $avis->company,
+            'message' => $request->message,
+            'rating' => $request->rating ?? $avis->rating,
+            'published_at'=>$request->has('published') ? now() : null,
+        ]);
+        
+        if ($request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => "Testimonial mis à jour avec succès!"]);
+        }
+        
+        return redirect()->route('avis.index')
+            ->with('message', 'Avis modifié avec succès.');
     }
 
     /**

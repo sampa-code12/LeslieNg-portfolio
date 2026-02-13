@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('avis', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->nullable();
-            $table->text('message');
-            $table->timestamp('published_at')->nullable();
-            $table->timestamps();
+        Schema::table('skills', function (Blueprint $table) {
+            $table->integer('percentage')->nullable()->after('level');
+            $table->string('range')->nullable()->after('percentage');
         });
     }
 
@@ -25,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('avis');
+        Schema::table('skills', function (Blueprint $table) {
+            $table->dropColumn(['percentage', 'range']);
+        });
     }
 };

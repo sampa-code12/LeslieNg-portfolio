@@ -44,6 +44,24 @@
               </div>
             @endif
             
+            @if($skill->percentage || $skill->range)
+              <div class="mb-4 p-3" style="background: #f9f8ff; border-radius: 10px; border-left: 4px solid #764ba2;">
+                <h6 style="color: #999; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Progression</h6>
+                @if($skill->percentage)
+                  <p style="font-size: 0.95rem; color: #666; margin-bottom: 10px;">
+                    <i class="bi bi-graph-up" style="color: #764ba2; margin-right: 8px;"></i>
+                    <strong>{{ $skill->percentage }}%</strong>
+                  </p>
+                @endif
+                @if($skill->range)
+                  <p style="font-size: 0.95rem; color: #666; margin: 0;">
+                    <i class="bi bi-speedometer" style="color: #667eea; margin-right: 8px;"></i>
+                    <strong>{{ $skill->range }}</strong>
+                  </p>
+                @endif
+              </div>
+            @endif
+            
             <!-- Info -->
             <div class="mb-4">
               <h4 style="color: #333; font-weight: 700; margin-top: 20px; margin-bottom: 15px;">A propos de cette competence</h4>
@@ -54,7 +72,7 @@
             <hr>
             <div class="mt-4">
               <small class="text-muted">
-                <i class="bi bi-calendar3"></i> Ajoute: {{ $skill->published_at->format('d F Y H:i') }}
+                <i class="bi bi-calendar3"></i> Ajoute: {{ $skill->published_at ? $skill->published_at->format('d F Y H:i') : 'N/A' }}
               </small>
             </div>
 

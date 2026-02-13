@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Avis;
 use App\Models\Service;
 use App\Models\Skill;
+use App\Models\Resume;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -14,7 +15,8 @@ class FolioController extends Controller
     {
         $services = Service::limit(3)->get();
         $skills = Skill::limit(6)->get();
-        return view('folio.index', compact('services', 'skills'));
+        $avis = Avis::all();
+        return view('folio.index', compact('services', 'skills', 'avis'));
     }
 
     public function about()
@@ -27,7 +29,10 @@ class FolioController extends Controller
 
     public function resume()
     {
-        return view('folio.resume');
+        $educations = Resume::where('type', 'education')->get();
+        $experiences = Resume::where('type', 'experience')->get();
+        $skills = Resume::where('type', 'skill')->get();
+        return view('folio.resume', compact('educations', 'experiences', 'skills'));
     }
 
     public function services()
@@ -42,7 +47,8 @@ class FolioController extends Controller
 
     public function contact()
     {
-        return view('folio.contact');
+        $avis = Avis::all();
+        return view('folio.contact', compact('avis'));
     }
 
     public function serviceDetails()

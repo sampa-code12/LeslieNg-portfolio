@@ -12,7 +12,13 @@ class Skill extends Model
         'name',
         'level',
         'category',
+        'percentage',
+        'range',
         'published_at'
+    ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
     ];
 
     public function cast():array{
@@ -22,7 +28,7 @@ class Skill extends Model
     }
 
     public function services(){
-        return $this->belongsToMany(Service::class, 'service_id');
+        return $this->belongsToMany(Service::class, 'service_skill');
     }
 
     public function user(){

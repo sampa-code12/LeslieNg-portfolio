@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Superadmin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="{{ asset('folio/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -86,11 +87,67 @@
             text-align: center;
         }
 
-        /* Main Content */
+        /* Sidebar Submenu */
+        .sidebar-submenu {
+            margin: 0;
+        }
+
+        .sidebar-toggle {
+            display: block;
+            padding: 15px 25px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            width: 100%;
+            border: none;
+            background: none;
+            text-align: left;
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: white;
+        }
+
+        .sidebar-submenu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .sidebar-submenu-list li {
+            margin: 0;
+        }
+
+        .sidebar-submenu-list a {
+            display: block;
+            padding: 12px 25px 12px 50px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-submenu-list a:hover,
+        .sidebar-submenu-list a.active {
+            background: rgba(102, 126, 234, 0.15);
+            color: white;
+            border-left-color: #667eea;
+            padding-left: 47px;
+        }
+
         .main-content {
             margin-left: 280px;
             padding: 30px;
             flex: 1;
+            overflow-y: auto;
+            max-height: 100vh;
         }
 
         .header {
@@ -161,10 +218,31 @@
             border-radius: 8px;
         }
 
-        .user-profile img {
-            width: 40px;
-            height: 40px;
+        /* Content Area */
+        #content-area {
+            min-height: 400px;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 40px;
+            color: #667eea;
+        }
+
+        .spinner-border {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-top-color: #667eea;
             border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Stats Grid */
@@ -275,6 +353,7 @@
         .action-buttons {
             display: flex;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .action-btn {
@@ -284,6 +363,10 @@
             cursor: pointer;
             font-size: 0.85rem;
             transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .action-btn-edit {
@@ -365,14 +448,47 @@
             </div>
 
             <ul class="sidebar-menu">
-                <li><a href="{{ route('dashboard') }}" class="active"><i class="bi bi-house"></i> Dashboard</a></li>
-                <li><a href="{{ route('services.index') }}"><i class="bi bi-briefcase"></i> Services</a></li>
-                <li><a href="{{ route('skills.index') }}"><i class="bi bi-star"></i> Skills</a></li>
-                <li><a href="{{ route('avis.index') }}"><i class="bi bi-chat-left-quote"></i> Testimonials</a></li>
-                <li style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
-                    <a href="{{ route('index') }}"><i class="bi bi-globe"></i> View Site</a>
-                </li>
+                <li><a class="sidebar-link active" data-section="dashboard"><i class="bi bi-house"></i> Dashboard</a></li>
                 
+                <!-- Services Dropdown -->
+                <li class="sidebar-submenu">
+                    <a href="#" class="sidebar-toggle" data-target="services-menu">
+                        <i class="bi bi-briefcase"></i> Services
+                        <i class="bi bi-chevron-down" style="float: right; font-size: 0.8rem;"></i>
+                    </a>
+                    <ul class="sidebar-submenu-list" id="services-menu" style="display: none;">
+                        <li><a class="sidebar-link" data-section="services-index"><i class="bi bi-list"></i> All Services</a></li>
+                        <li><a class="sidebar-link" data-section="services-create"><i class="bi bi-plus-circle"></i> New Service</a></li>
+                    </ul>
+                </li>
+
+                <!-- Skills Dropdown -->
+                <li class="sidebar-submenu">
+                    <a href="#" class="sidebar-toggle" data-target="skills-menu">
+                        <i class="bi bi-star"></i> Skills
+                        <i class="bi bi-chevron-down" style="float: right; font-size: 0.8rem;"></i>
+                    </a>
+                    <ul class="sidebar-submenu-list" id="skills-menu" style="display: none;">
+                        <li><a class="sidebar-link" data-section="skills-index"><i class="bi bi-list"></i> All Skills</a></li>
+                        <li><a class="sidebar-link" data-section="skills-create"><i class="bi bi-plus-circle"></i> New Skill</a></li>
+                    </ul>
+                </li>
+
+                <!-- Testimonials Dropdown -->
+                <li class="sidebar-submenu">
+                    <a href="#" class="sidebar-toggle" data-target="testimonials-menu">
+                        <i class="bi bi-chat-left-quote"></i> Testimonials
+                        <i class="bi bi-chevron-down" style="float: right; font-size: 0.8rem;"></i>
+                    </a>
+                    <ul class="sidebar-submenu-list" id="testimonials-menu" style="display: none;">
+                        <li><a class="sidebar-link" data-section="testimonials-index"><i class="bi bi-list"></i> All Testimonials</a></li>
+                        <li><a class="sidebar-link" data-section="testimonials-create"><i class="bi bi-plus-circle"></i> New Testimonial</a></li>
+                    </ul>
+                </li>
+
+                <li style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                    <a href="{{ route('index') }}" target="_blank"><i class="bi bi-globe"></i> View Site</a>
+                </li>
             </ul>
         </div>
 
@@ -382,10 +498,10 @@
             <div class="header">
                 <h1>
                     <i class="bi bi-speedometer2"></i>
-                    Dashboard
+                    <span id="page-title">Dashboard</span>
                 </h1>
                 <div class="header-actions">
-                    <a href="{{ route('services.create') }}" class="btn btn-primary">
+                    <a href="{{ route('services.create') }}" class="btn btn-primary" id="create-btn" style="display: none;">
                         <i class="bi bi-plus-circle"></i> New Service
                     </a>
                     <div class="user-profile">
@@ -397,164 +513,238 @@
                 </div>
             </div>
 
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <!-- Services Card -->
-                <div class="stat-card stat-card-services">
-                    <div class="stat-card-icon">
-                        <i class="bi bi-briefcase"></i>
-                    </div>
-                    <h3>Total Services</h3>
-                    <div class="value">{{ $servicesCount }}</div>
-                </div>
-
-                <!-- Skills Card -->
-                <div class="stat-card stat-card-skills">
-                    <div class="stat-card-icon">
-                        <i class="bi bi-star"></i>
-                    </div>
-                    <h3>Total Skills</h3>
-                    <div class="value">{{ $skillsCount }}</div>
-                </div>
-
-                <!-- Testimonials Card -->
-                <div class="stat-card stat-card-avis">
-                    <div class="stat-card-icon">
-                        <i class="bi bi-chat-left-quote"></i>
-                    </div>
-                    <h3>Total Testimonials</h3>
-                    <div class="value">{{ $avisCount }}</div>
-                </div>
+            <!-- Content Area -->
+            <div id="content-area">
+                <!-- Loaded dynamically -->
             </div>
+        </div>
+    </div>
 
-            <!-- Recent Services -->
-            <div class="content-section">
-                <h2>
-                    <i class="bi bi-briefcase"></i>
-                    Recent Services
-                </h2>
-                @if($recentServices->count() > 0)
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Published</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($recentServices as $service)
-                                <tr>
-                                    <td><strong>{{ $service->title }}</strong></td>
-                                    <td><span class="badge badge-primary">{{ $service->category }}</span></td>
-                                    <td>{{ $service->published_at ? $service->published_at->format('d M Y') : 'Not Published' }}</td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <a href="{{ route('services.show', $service->id) }}" class="action-btn action-btn-edit">
-                                                <i class="bi bi-eye"></i> View
-                                            </a>
-                                            <a href="{{ route('services.edit', $service->id) }}" class="action-btn action-btn-edit">
-                                                <i class="bi bi-pencil"></i> Edit
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <div class="empty-state">
-                        <i class="bi bi-inbox"></i>
-                        <p>No services yet. <a href="{{ route('services.create') }}">Create one</a></p>
-                    </div>
-                @endif
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div class="modal-dialog" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border-radius: 12px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 15px 50px rgba(0,0,0,0.3);">
+            <div class="modal-header" style="padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                <h5 id="modalTitle" style="margin: 0; font-size: 1.5rem; font-weight: 700; color: #2c3e50;">Edit</h5>
+                <button type="button" onclick="closeModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999;">×</button>
             </div>
-
-            <!-- Recent Skills -->
-            <div class="content-section">
-                <h2>
-                    <i class="bi bi-star"></i>
-                    Recent Skills
-                </h2>
-                @if($recentSkills->count() > 0)
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Level</th>
-                                <th>Published</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($recentSkills as $skill)
-                                <tr>
-                                    <td><strong>{{ $skill->name }}</strong></td>
-                                    <td>{{ $skill->category ?? 'General' }}</td>
-                                    <td><span class="badge badge-success">{{ $skill->level ?? 'Intermediate' }}</span></td>
-                                    <td>{{ $skill->published_at ? $skill->published_at->format('d M Y') : 'Not Published' }}</td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <a href="{{ route('skills.edit', $skill->id) }}" class="action-btn action-btn-edit">
-                                                <i class="bi bi-pencil"></i> Edit
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <div class="empty-state">
-                        <i class="bi bi-inbox"></i>
-                        <p>No skills yet. <a href="{{ route('skills.create') }}">Create one</a></p>
-                    </div>
-                @endif
-            </div>
-
-            <!-- Recent Testimonials -->
-            <div class="content-section">
-                <h2>
-                    <i class="bi bi-chat-left-quote"></i>
-                    Recent Testimonials
-                </h2>
-                @if($recentAvis->count() > 0)
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Message</th>
-                                <th>Published</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($recentAvis as $avi)
-                                <tr>
-                                    <td>{{ Str::limit($avi->message, 50) }}</td>
-                                    <td>{{ $avi->published_at ? $avi->published_at->format('d M Y') : 'Not Published' }}</td>
-                                    <td>
-                                        <div class="action-buttons">
-                                            <a href="{{ route('avis.show', $avi->id) }}" class="action-btn action-btn-edit">
-                                                <i class="bi bi-eye"></i> View
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <div class="empty-state">
-                        <i class="bi bi-inbox"></i>
-                        <p>No testimonials yet.</p>
-                    </div>
-                @endif
+            <div class="modal-body" id="modalContent" style="padding: 20px;">
+                <!-- Content loaded here -->
             </div>
         </div>
     </div>
 
     <script src="{{ asset('folio/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+        const contentArea = document.getElementById('content-area');
+        const pageTitle = document.getElementById('page-title');
+        const createBtn = document.getElementById('create-btn');
+        const editModal = document.getElementById('editModal');
+        const modalContent = document.getElementById('modalContent');
+        const modalTitle = document.getElementById('modalTitle');
+        
+        // Empêcher les clics dans le modal de se propager
+        modalContent.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        
+        // Délégation d'événements pour les boutons d'action (view/edit)
+        contentArea.addEventListener('click', function(e) {
+            const btn = e.target.closest('[data-action]');
+            if (!btn) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const action = btn.dataset.action;
+            const type = btn.dataset.type;
+            const id = btn.dataset.id;
+            
+            console.log('Action clicked:', action, 'Type:', type, 'ID:', id);
+            
+            if (action === 'view') {
+                loadDetail(type, id);
+            } else if (action === 'edit') {
+                loadEditForm(type, id);
+            }
+        });
+        
+        // Charger le dashboard au démarrage
+        loadSection('dashboard');
+        
+        // Gestion des toggles de submenu
+        document.querySelectorAll('.sidebar-toggle').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.getElementById(toggle.dataset.target);
+                if (target.style.display === 'none') {
+                    target.style.display = 'block';
+                } else {
+                    target.style.display = 'none';
+                }
+            });
+        });
+        
+        // Event listeners pour les liens du sidebar
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = link.dataset.section;
+                loadSection(section);
+                
+                // Mettre à jour l'active
+                document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+        
+        function loadSection(section) {
+            contentArea.innerHTML = '<div class="loading"><div class="spinner-border"></div> <span>Chargement...</span></div>';
+            
+            fetch(`/dashboard/section/${section}`, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                contentArea.innerHTML = data.html;
+                pageTitle.textContent = data.title;
+                
+                // Afficher/masquer le bouton "New" basé sur la section
+                if (section.includes('-index')) {
+                    createBtn.style.display = 'inline-flex';
+                } else {
+                    createBtn.style.display = 'none';
+                }
+                
+                // Attacher les listeners pour show/edit
+                attachViewEditListeners();
+            })
+            .catch(error => {
+                contentArea.innerHTML = '<div class="alert alert-danger">Erreur lors du chargement du contenu</div>';
+                console.error('Erreur:', error);
+            });
+        }
+        
+        function attachViewEditListeners() {
+            // Cette fonction n'a plus besoin de faire quelque chose
+            // Les event listeners sont maintenant gérés par la délégation d'événements
+            console.log('Section loaded - event delegation active');
+        }
+        
+        function loadDetail(type, id) {
+            contentArea.innerHTML = '<div class="loading"><div class="spinner-border"></div> <span>Chargement...</span></div>';
+            
+            fetch(`/dashboard/${type}/${id}`, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                contentArea.innerHTML = data.html;
+                pageTitle.textContent = `View ${data.title}`;
+                attachViewEditListeners();
+            })
+            .catch(error => {
+                contentArea.innerHTML = '<div class="alert alert-danger">Erreur lors du chargement du détail</div>';
+                console.error('Erreur:', error);
+            });
+        }
+        
+        function loadEditForm(type, id) {
+            console.log('loadEditForm called:', type, id);
+            fetch(`/dashboard/${type}/${id}/edit-form`, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Edit form loaded:', data);
+                modalTitle.textContent = `Edit ${data.title}`;
+                modalContent.innerHTML = data.html;
+                editModal.style.display = 'block';
+                
+                // Ajouter le listener de submit au nouveau formulaire
+                setTimeout(() => {
+                    const form = modalContent.querySelector('form');
+                    if (form) {
+                        // Clone le formulaire pour enlever les anciens listeners
+                        const newForm = form.cloneNode(true);
+                        form.parentNode.replaceChild(newForm, form);
+                        
+                        newForm.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            console.log('Form submitted');
+                            submitEditForm(newForm, type, id);
+                        });
+                    }
+                }, 100);
+            })
+            .catch(error => {
+                alert('Erreur lors du chargement du formulaire');
+                console.error('Erreur:', error);
+            });
+        }
+        
+        function submitEditForm(form, type, id) {
+            console.log('submitEditForm called:', type, id);
+            const formData = new FormData(form);
+            formData.append('_method', 'PUT');
+            console.log('Form data prepared');
+            
+            // Construct the correct route URL based on type
+            const routeMap = {
+                'services': `/services/${id}`,
+                'skills': `/skills/${id}`,
+                'avis': `/avis/${id}`
+            };
+            
+            const url = routeMap[type] || `/${type}/${id}`;
+            console.log('Sending to URL:', url);
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                if (data.success) {
+                    closeModal();
+                    alert('Mise à jour réussie!');
+                    // Recharger la liste ou le détail
+                    loadSection(`${type}-index`);
+                } else {
+                    alert('Erreur: ' + (data.message || 'Une erreur est survenue'));
+                }
+            })
+            .catch(error => {
+                alert('Erreur lors de la mise à jour');
+                console.error('Erreur:', error);
+            });
+        }
+        
+        function closeModal() {
+            console.log('Closing modal');
+            editModal.style.display = 'none';
+            modalContent.innerHTML = '';
+        }
+        
+        // Le bouton X dans le modal appelle closeModal()
+        // Les clics dans le modal sont empêchés de se propager (voir ci-dessus)
+    </script>
 </body>
 </html>

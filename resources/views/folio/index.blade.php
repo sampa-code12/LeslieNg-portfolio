@@ -217,6 +217,55 @@
   </div>
 </section>
 
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials section" style="background: #01283b;">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Témoignages</h2>
+    <p>Ce que mes clients disent de mon travail</p>
+    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#testimonialModal" style="margin-top: 15px;">
+      <i class="bi bi-star"></i> Donner un Témoignage
+    </button>
+  </div>
+
+  <div class="container">
+    <div class="row gy-4">
+      @forelse($avis as $avi)
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 100 }}">
+          <div class="testimonial-item" style="background: var(--default-color, #e7f2f7); padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; height: 100%;">
+            <div class="stars mb-3" style="color: #ffc107; font-size: 1.2rem;">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+            <p class="testimonial-text mb-3" style="color: #666; line-height: 1.6; min-height: 100px; display: flex; align-items: center; justify-content: center;">
+              "{{ $avi->message }}"
+            </p>
+            <div class="testimonial-author">
+              <h5 style="margin-bottom: 5px; color: #333;">{{ $avi->name ?? 'Utilisateur' }}</h5>
+              @if($avi->email)
+                <p style="color: #999; margin-bottom: 5px; font-size: 0.9rem;">{{ $avi->email }}</p>
+              @endif
+              <small style="color: #999;">
+                <i class="bi bi-calendar3"></i> {{ $avi->created_at->format('d M Y') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      @empty
+        <div class="col-12 text-center">
+          <p style="color: #666; padding: 30px;">Aucun témoignage pour le moment. Soyez le premier à en laisser un !</p>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#testimonialModal">
+            <i class="bi bi-star"></i> Donner le Premier Témoignage
+          </button>
+        </div>
+      @endforelse
+    </div>
+  </div>
+</section><!-- /Testimonials Section -->
+
 <!-- Contact Section -->
 <section id="contact" class="contact section">
   <div class="container section-title" data-aos="fade-up">

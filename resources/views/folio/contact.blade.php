@@ -12,7 +12,7 @@
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
     <h2>Contact</h2>
-    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam</p>
+    <p>Vous avez une question ou souhaitez travailler ensemble ? N'hésitez pas à me contacter !</p>
   </div><!-- End Section Title -->
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -21,16 +21,15 @@
       <div class="col-lg-5">
         <div class="info-box" data-aos="fade-up" data-aos-delay="200">
           <h3>Contact Info</h3>
-          <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis.</p>
+          
 
           <div class="info-item" data-aos="fade-up" data-aos-delay="300">
             <div class="icon-box">
               <i class="bi bi-geo-alt"></i>
             </div>
             <div class="content">
-              <h4>Our Location</h4>
-              <p>A108 Adam Street</p>
-              <p>New York, NY 535022</p>
+              <h4>My Location</h4>
+              
             </div>
           </div>
 
@@ -40,8 +39,7 @@
             </div>
             <div class="content">
               <h4>Phone Number</h4>
-              <p>+1 5589 55488 55</p>
-              <p>+1 6678 254445 41</p>
+              <p></p>
             </div>
           </div>
 
@@ -60,8 +58,8 @@
 
       <div class="col-lg-7">
         <div class="contact-form" data-aos="fade-up" data-aos-delay="300">
-          <h3>Get In Touch</h3>
-          <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis.</p>
+          <h3>Me Contacter</h3>
+          <p></p>
 
           @if($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -129,5 +127,53 @@
   </div>
 
 </section><!-- /Contact Section -->
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="testimonials section" style="background:#01283b;">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Témoignages</h2>
+    <p>Ce que mes clients disent de mon travail</p>
+    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#testimonialModal" style="margin-top: 15px;">
+      <i class="bi bi-star"></i> Donner un Témoignage
+    </button>
+  </div>
+
+  <div class="container">
+    <div class="row gy-4">
+      @forelse($avis as $avi)
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 100 }}">
+          <div class="testimonial-item" style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; height: 100%;">
+            <div class="stars mb-3" style="color: #ffc107; font-size: 1.2rem;">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+            <p class="testimonial-text mb-3" style="color: #666; line-height: 1.6; min-height: 100px; display: flex; align-items: center; justify-content: center;">
+              "{{ $avi->message }}"
+            </p>
+            <div class="testimonial-author">
+              <h5 style="margin-bottom: 5px; color: #333;">{{ $avi->name ?? 'Utilisateur' }}</h5>
+              @if($avi->email)
+                <p style="color: #999; margin-bottom: 5px; font-size: 0.9rem;">{{ $avi->email }}</p>
+              @endif
+              <small style="color: #999;">
+                <i class="bi bi-calendar3"></i> {{ $avi->created_at->format('d M Y') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      @empty
+        <div class="col-12 text-center">
+          <p style="color: #666; padding: 30px;">Aucun témoignage pour le moment. Soyez le premier à en laisser un !</p>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#testimonialModal">
+            <i class="bi bi-star"></i> Donner le Premier Témoignage
+          </button>
+        </div>
+      @endforelse
+    </div>
+  </div>
+</section><!-- /Testimonials Section -->
 
 @endsection

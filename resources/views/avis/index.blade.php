@@ -59,7 +59,17 @@
             <p class="card-text" style="font-style: italic; color: #555;">"{{ Str::limit($item->message, 120) }}"</p>
             
             <!-- Date -->
-            <small class="text-muted d-block mb-3">{{ $item->published_at->format('d M Y') }}</small>
+            @if($item->published_at)
+            <small class="text-muted d-block mb-3">
+              @if(is_string($item->published_at))
+                {{ \Carbon\Carbon::parse($item->published_at)->format('d M Y') }}
+              @else
+                {{ $item->published_at->format('d M Y') }}
+              @endif
+            </small>
+            @else
+            <small class="text-muted d-block mb-3">Not published</small>
+            @endif
             
             <!-- Actions -->
             <div class="btn-group" role="group">

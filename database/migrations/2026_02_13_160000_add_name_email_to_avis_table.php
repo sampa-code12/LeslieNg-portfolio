@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('avis', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->nullable();
-            $table->text('message');
-            $table->timestamp('published_at')->nullable();
-            $table->timestamps();
+        Schema::table('avis', function (Blueprint $table) {
+            $table->string('name')->nullable()->after('user_id');
+            $table->string('email')->nullable()->after('name');
         });
     }
 
@@ -25,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('avis');
+        Schema::table('avis', function (Blueprint $table) {
+            $table->dropColumn(['name', 'email']);
+        });
     }
 };
