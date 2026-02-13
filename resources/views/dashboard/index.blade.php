@@ -4,444 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Superadmin Dashboard</title>
+    <title>{{ config('app.name') }} - Superadmin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="{{ asset('folio/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('folio/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .dashboard-container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 280px;
-            background: #2c3e50;
-            color: white;
-            padding: 30px 0;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            box-shadow: 2px 0 15px rgba(0,0,0,0.1);
-        }
-
-        .sidebar-brand {
-            padding: 0 25px 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 20px;
-        }
-
-        .sidebar-brand h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .sidebar-brand p {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.7);
-        }
-
-        .sidebar-menu {
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin: 0;
-        }
-
-        .sidebar-menu a {
-            display: block;
-            padding: 15px 25px;
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-        }
-
-        .sidebar-menu a:hover,
-        .sidebar-menu a.active {
-            background: rgba(102, 126, 234, 0.1);
-            color: white;
-            border-left-color: #667eea;
-            padding-left: 22px;
-        }
-
-        .sidebar-menu i {
-            margin-right: 12px;
-            width: 20px;
-            text-align: center;
-        }
-
-        /* Sidebar Submenu */
-        .sidebar-submenu {
-            margin: 0;
-        }
-
-        .sidebar-toggle {
-            display: block;
-            padding: 15px 25px;
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-            cursor: pointer;
-            width: 100%;
-            border: none;
-            background: none;
-            text-align: left;
-            font-family: inherit;
-            font-size: inherit;
-        }
-
-        .sidebar-toggle:hover {
-            background: rgba(102, 126, 234, 0.1);
-            color: white;
-        }
-
-        .sidebar-submenu-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            background: rgba(0,0,0,0.2);
-        }
-
-        .sidebar-submenu-list li {
-            margin: 0;
-        }
-
-        .sidebar-submenu-list a {
-            display: block;
-            padding: 12px 25px 12px 50px;
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-            font-size: 0.9rem;
-        }
-
-        .sidebar-submenu-list a:hover,
-        .sidebar-submenu-list a.active {
-            background: rgba(102, 126, 234, 0.15);
-            color: white;
-            border-left-color: #667eea;
-            padding-left: 47px;
-        }
-
-        .main-content {
-            margin-left: 280px;
-            padding: 30px;
-            flex: 1;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-        }
-
-        .header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #2c3e50;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-outline {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
-        }
-
-        .btn-outline:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 10px 15px;
-            background: #f0f0f0;
-            border-radius: 8px;
-        }
-
-        /* Content Area */
-        #content-area {
-            min-height: 400px;
-        }
-
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 40px;
-            color: #667eea;
-        }
-
-        .spinner-border {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(102, 126, 234, 0.3);
-            border-top-color: #667eea;
-            border-radius: 50%;
-            animation: spin 0.6s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-        }
-
-        .stat-card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .stat-card-services .stat-card-icon { color: #667eea; }
-        .stat-card-skills .stat-card-icon { color: #764ba2; }
-        .stat-card-avis .stat-card-icon { color: #f093fb; }
-
-        .stat-card h3 {
-            font-size: 0.95rem;
-            color: #888;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-
-        .stat-card .value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-
-        /* Content Section */
-        .content-section {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-
-        .content-section h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .content-section h2 i {
-            color: #667eea;
-        }
-
-        .table {
-            margin-bottom: 0;
-        }
-
-        .table thead th {
-            background: #f8f9fa;
-            font-weight: 600;
-            color: #2c3e50;
-            border: none;
-            padding: 15px;
-        }
-
-        .table tbody td {
-            padding: 15px;
-            vertical-align: middle;
-            border-color: #eee;
-        }
-
-        .table tbody tr:hover {
-            background: #f8f9fa;
-        }
-
-        .badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: 500;
-            font-size: 0.8rem;
-        }
-
-        .badge-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .badge-success {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .action-btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .action-btn-edit {
-            background: #e3f2fd;
-            color: #1976d2;
-        }
-
-        .action-btn-edit:hover {
-            background: #1976d2;
-            color: white;
-        }
-
-        .action-btn-delete {
-            background: #ffebee;
-            color: #c62828;
-        }
-
-        .action-btn-delete:hover {
-            background: #c62828;
-            color: white;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #999;
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: #ddd;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 200px;
-            }
-
-            .main-content {
-                margin-left: 200px;
-                padding: 15px;
-            }
-
-            .header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-
-            .header h1 {
-                font-size: 1.5rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .sidebar {
-                width: 0;
-                margin-left: -280px;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-        }
-    </style>
+    <link href="{{ asset('folio/assets/css/dashboard.css') }}" rel="stylesheet">
 </head>
 <body>
+    <button class="sidebar-toggle-btn" id="sidebarToggleBtn" style="position:fixed;top:18px;left:18px;z-index:1001;background:#2c3e50;color:#fff;border:none;border-radius:4px;padding:8px 12px;font-size:1.5rem;cursor:pointer;">
+        <i class="bi bi-list"></i>
+    </button>
+    <div class="sidebar-backdrop" id="sidebarBackdrop" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);z-index:999;"></div>
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <div class="sidebar-brand">
                 <h2><i class="bi bi-speedometer2"></i> Dashboard</h2>
                 <p>Superadmin Panel</p>
@@ -746,5 +322,78 @@
         // Le bouton X dans le modal appelle closeModal()
         // Les clics dans le modal sont empêchés de se propager (voir ci-dessus)
     </script>
-</body>
+    <script>
+        // Sidebar toggle for mobile
+        console.log('Sidebar script loaded');
+        
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+        
+        if (!sidebar) console.error('Sidebar not found!');
+        if (!sidebarToggleBtn) console.error('Toggle button not found!');
+        if (!sidebarBackdrop) console.error('Backdrop not found!');
+        
+        function openSidebar() {
+            console.log('Opening sidebar...');
+            if (sidebar) {
+                sidebar.classList.add('open');
+                console.log('Added open class, current classes:', sidebar.className);
+            }
+            if (sidebarBackdrop) {
+                sidebarBackdrop.classList.add('active');
+                sidebarBackdrop.style.display = 'block';
+            }
+        }
+        
+        function closeSidebar() {
+            console.log('Closing sidebar...');
+            if (sidebar) {
+                sidebar.classList.remove('open');
+                console.log('Removed open class, current classes:', sidebar.className);
+            }
+            if (sidebarBackdrop) {
+                sidebarBackdrop.classList.remove('active');
+                sidebarBackdrop.style.display = 'none';
+            }
+        }
+        
+        // Button click handler
+        if (sidebarToggleBtn) {
+            sidebarToggleBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Button clicked, window width:', window.innerWidth);
+                if (window.innerWidth <= 991.98) {
+                    openSidebar();
+                }
+            });
+            console.log('Button listener attached');
+        }
+        
+        // Backdrop click handler
+        if (sidebarBackdrop) {
+            sidebarBackdrop.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Backdrop clicked');
+                closeSidebar();
+            });
+            console.log('Backdrop listener attached');
+        }
+        
+        // Close sidebar when clicking menu items on mobile
+        if (sidebar) {
+            sidebar.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 991.98) {
+                        console.log('Menu item clicked on mobile');
+                        closeSidebar();
+                    }
+                });
+            });
+            console.log('Menu item listeners attached');
+        }
+    </script>
+    </body>
 </html>

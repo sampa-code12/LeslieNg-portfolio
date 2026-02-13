@@ -14,12 +14,11 @@
     <div class="row gy-4 align-items-center">
       <div class="col-lg-6 order-2 order-lg-1">
         <div class="hero-content">
-          <h1 data-aos="fade-up" data-aos-delay="200">Hello, I'm <span class="highlight">Leslie NG</span></h1>
-          <h2 data-aos="fade-up" data-aos-delay="300">Creative <span class="typed" data-typed-items="Graphic Designer"></span></h2>
-          <p data-aos="fade-up" data-aos-delay="400">I transform ideas into stunning digital experiences. Specializing in user-centered design, visual branding, and interactive interfaces that captivate and convert.</p>
+          <h1 data-aos="fade-up" data-aos-delay="200">Hello,I'm <span class="highlight">Leslie NG</span></h1>
+          <h2 data-aos="fade-up" data-aos-delay="300">Graphic <span class="typed" data-typed-items="Designer, Illustrator, Art Director"></span></h2>
+          <p data-aos="fade-up" data-aos-delay="400">Spécialisée en design graphique, je crée des identités visuelles, des supports de communication et des expériences graphiques uniques pour valoriser les marques et les projets. Mon expertise couvre l’illustration, la typographie, la mise en page et la direction artistique.</p>
           <div class="hero-actions" data-aos="fade-up" data-aos-delay="500">
-            <a href="{{ route('portfolio') }}" class="btn btn-primary">View My Work</a>
-            <a href="{{ route('contact') }}" class="btn btn-outline">Get In Touch</a>
+            <a href="{{ route('resume') }}" class="btn btn-outline">Voir mon CV</a>
           </div>
           <div class="social-links" data-aos="fade-up" data-aos-delay="600">
             <a href="#"><i class="bi bi-twitter"></i></a>
@@ -60,28 +59,25 @@
 <section id="about" class="about section">
   <div class="container section-title" data-aos="fade-up">
     <h2>About</h2>
-    <p>En savoir plus sur moi et mon approche créative du design</p>
+    <p>Découvrez mon univers de Graphic Designer et ma passion pour la création visuelle.</p>
   </div>
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="row align-items-center justify-content-between gy-5">
       <div class="col-lg-6" data-aos="fade-right" data-aos-delay="150">
         <div class="intro-content">
-          <h3 style="font-size: 2rem; font-weight: 700; color: #333; margin-bottom: 20px;">Je suis Leslie Yasmine</h3>
-          <p style="font-size: 1.05rem; line-height: 1.8; color: #555; margin-bottom: 15px;">
-            Je suis une designer créative passionnée par la création d'expériences visuelles captivantes et 
-            intuitives. Avec une expertise en UI/UX design, branding digital et stratégie créative, je transforme 
-            les idées complexes en solutions de design élégantes et efficaces.
+          <h3 style="font-size: 2rem; font-weight: 700; color: #cdc6c6; margin-bottom: 20px;">Je suis Leslie NG, Graphic Designer</h3>
+          <p style="font-size: 1.05rem; line-height: 1.8; color: #cdc6c6; margin-bottom: 15px;">
+            Spécialisée en design graphique, je crée des identités visuelles, des supports de communication et des expériences graphiques uniques pour valoriser les marques et les projets. Mon expertise couvre l’illustration, la typographie, la mise en page et la direction artistique.
           </p>
-          <p style="font-size: 1.05rem; line-height: 1.8; color: #555; margin-bottom: 20px;">
-            Mon approche combine rigueur analytique et sensibilité créative pour livrer des designs qui 
-            non seulement sont beaux, mais qui résolvent aussi des problèmes réels et créent de l'impact.
+          <p style="font-size: 1.05rem; line-height: 1.8; color: #cdc6c6; margin-bottom: 20px;">
+            J’allie créativité, sens du détail et compréhension des enjeux de communication pour concevoir des visuels percutants, adaptés à chaque besoin et à chaque univers.
           </p>
           <div style="display: flex; gap: 15px; margin-top: 25px;">
             <a href="{{ route('about') }}" class="btn btn-primary" style="padding: 12px 30px;">
               <i class="bi bi-arrow-right"></i> En savoir plus
             </a>
-            <a href="{{ route('portfolio') }}" class="btn btn-outline" style="padding: 12px 30px;">
+            <a href="{{ route('resume') }}" class="btn btn-outline" style="padding: 12px 30px;">
               Voir mon portfolio
             </a>
           </div>
@@ -104,13 +100,7 @@
           <p style="color: #666; font-size: 0.95rem;">Création visuelle et branding</p>
         </div>
       </div>
-      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="180">
-        <div class="skill-item" style="text-align: center; padding: 25px; background: #f9f9f9; border-radius: 12px; border-left: 4px solid #764ba2;">
-          <i class="bi bi-lightbulb" style="font-size: 2.5rem; color: #764ba2;"></i>
-          <h4 style="margin: 15px 0; color: #333; font-weight: 700;">Stratégie UX</h4>
-          <p style="color: #666; font-size: 0.95rem;">Conception centrée utilisateur</p>
-        </div>
-      </div>
+      
       <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="240">
         <div class="skill-item" style="text-align: center; padding: 25px; background: #f9f9f9; border-radius: 12px; border-left: 4px solid #667eea;">
           <i class="bi bi-pen" style="font-size: 2.5rem; color: #667eea;"></i>
@@ -118,13 +108,7 @@
           <p style="color: #666; font-size: 0.95rem;">Identité visuelle complète</p>
         </div>
       </div>
-      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-        <div class="skill-item" style="text-align: center; padding: 25px; background: #f9f9f9; border-radius: 12px; border-left: 4px solid #764ba2;">
-          <i class="bi bi-display" style="font-size: 2.5rem; color: #764ba2;"></i>
-          <h4 style="margin: 15px 0; color: #333; font-weight: 700;">Digital</h4>
-          <p style="color: #666; font-size: 0.95rem;">Solutions web modernes</p>
-        </div>
-      </div>
+      
     </div>
   </div>
 </section><!-- /About Section -->

@@ -24,6 +24,7 @@
   <link href="{{ asset('folio/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
   <link href="{{ asset('folio/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
 
+
   <!-- Main CSS File -->
   <link href="{{ asset('folio/assets/css/main.css') }}" rel="stylesheet">
 
@@ -64,7 +65,12 @@
 
     <div class="container">
       <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">FolioOne</strong> <span>All Rights Reserved<br></span></p>
+        <p>
+          <span>© 2026</span>
+          <strong class="px-1 sitename">Leslie NG</strong>
+          <span>| Graphic Designer</span><br>
+          <span>All Rights Reserved</span>
+        </p>
       </div>
       <div class="social-links d-flex justify-content-center">
         <a href=""><i class="bi bi-twitter-x"></i></a>
@@ -87,6 +93,7 @@
   @include('components.testimonial-modal')
 
   <!-- Vendor JS Files -->
+
   <script src="{{ asset('folio/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('folio/assets/vendor/php-email-form/validate.js') }}"></script>
   <script src="{{ asset('folio/assets/vendor/aos/aos.js') }}"></script>

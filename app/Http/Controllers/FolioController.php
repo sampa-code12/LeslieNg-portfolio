@@ -21,7 +21,7 @@ class FolioController extends Controller
 
     public function about()
     {
-        $services = Service::offset(3)->get();
+        $services = Service::skip(3)->take(3)->get();
         $skills = Skill::limit(6)->get();
         $avis = Avis::all();
         return view('folio.about', compact('services', 'skills', 'avis'));

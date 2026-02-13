@@ -10,22 +10,19 @@
 <section id="about" class="about section">
   <div class="container section-title" data-aos="fade-up">
     <h2>About</h2>
-    <p>En savoir plus sur moi et mon approche créative du design</p>
+    <p>Découvrez mon univers de Graphic Designer et ma passion pour la création visuelle.</p>
   </div>
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="row align-items-center justify-content-between gy-5">
       <div class="col-lg-6" data-aos="fade-right" data-aos-delay="150">
         <div class="intro-content">
-          <h3 style="font-size: 2rem; font-weight: 700; color: #333; margin-bottom: 20px;">Je suis Leslie Yasmine</h3>
-          <p style="font-size: 1.05rem; line-height: 1.8; color: #555; margin-bottom: 15px;">
-            Je suis une designer créative passionnée par la création d'expériences visuelles captivantes et 
-            intuitives. Avec une expertise en UI/UX design, branding digital et stratégie créative, je transforme 
-            les idées complexes en solutions de design élégantes et efficaces.
+          <h3 style="font-size: 2rem; font-weight: 700; color: #cdc6c6; margin-bottom: 20px;">Je suis Leslie Ng, Graphic Designer</h3>
+          <p style="font-size: 1.05rem; line-height: 1.8; color: #cdc6c6; margin-bottom: 15px;">
+            Spécialisée en design graphique, je crée des identités visuelles, des supports de communication et des expériences graphiques uniques pour valoriser les marques et les projets. Mon expertise couvre l’illustration, la typographie, la mise en page et la direction artistique.
           </p>
-          <p style="font-size: 1.05rem; line-height: 1.8; color: #555; margin-bottom: 20px;">
-            Mon approche combine rigueur analytique et sensibilité créative pour livrer des designs qui 
-            non seulement sont beaux, mais qui résolvent aussi des problèmes réels et créent de l'impact.
+          <p style="font-size: 1.05rem; line-height: 1.8; color: #cdc6c6; margin-bottom: 20px;">
+            J’allie créativité, sens du détail et compréhension des enjeux de communication pour concevoir des visuels percutants, adaptés à chaque besoin et à chaque univers.
           </p>
           <div style="display: flex; gap: 15px; margin-top: 25px;">
             <a href="{{ route('about') }}" class="btn btn-primary" style="padding: 12px 30px;">
@@ -40,7 +37,7 @@
 
       <div class="col-lg-5" data-aos="zoom-in" data-aos-delay="250">
         <figure class="profile-figure text-center">
-          <img src="{{ asset('folio/assets/img/profile/LeslieNg.jpeg') }}" alt="Leslie Yasmine" class="img-fluid" style="border-radius: 15px; box-shadow: 0 15px 50px rgba(0,0,0,0.15);">
+              <img src="{{ asset('folio/assets/img/profile/LeslieNg.jpeg') }}" alt="Leslie Yasmine" class="img-fluid" style="border-radius: 15px; box-shadow: 0 15px 50px rgba(0,0,0,0.15);">
         </figure>
       </div>
     </div>

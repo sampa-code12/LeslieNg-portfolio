@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
         if (app()->environment('production')) {
             URL::forceScheme('https');
         }
-        // ...existing code...
+        // Do not force http in local, let Laravel use default
+        
     }
 }

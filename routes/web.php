@@ -9,9 +9,7 @@ use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\DashboardController;
 
 // Redirect root to folio index
-Route::get('/', function () {
-    return view('folio.index');
-});
+Route::get('/', [FolioController::class, 'index'])->name('index');
 
 // Dashboard Route
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -19,8 +17,7 @@ Route::get('/dashboard/section/{section}', [DashboardController::class, 'section
 Route::get('/dashboard/{type}/{id}', [DashboardController::class, 'showDetail'])->name('dashboard.show');
 Route::get('/dashboard/{type}/{id}/edit-form', [DashboardController::class, 'editFormDetail'])->name('dashboard.edit-form');
 
-// FolioOne Portfolio Routes
-Route::get('/', [FolioController::class, 'index'])->name('index');
+
 Route::get('/about', [FolioController::class, 'about'])->name('about');
 Route::get('/resume', [FolioController::class, 'resume'])->name('resume');
 Route::get('/services', [FolioController::class, 'services'])->name('services');
