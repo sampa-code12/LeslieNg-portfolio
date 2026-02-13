@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>@yield('title', 'FolioOne') - FolioOne Bootstrap Template</title>
+  <title>{{ config('app.name') }}</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -72,9 +72,7 @@
         <a href=""><i class="bi bi-instagram"></i></a>
         <a href=""><i class="bi bi-linkedin"></i></a>
       </div>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> | <a href="https://bootstrapmade.com/tools/">DevTools</a>
-      </div>
+      
     </div>
 
   </footer>
